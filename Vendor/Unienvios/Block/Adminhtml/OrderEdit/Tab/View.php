@@ -89,7 +89,7 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Backend\B
 
     public function getToken(){
 	
-	return __( json_encode(  $this->getOrder()->getData() ) );
+	return __( json_encode(  $this->getOrder()->getCustomNotes() ) );
 	
 	}
 }
