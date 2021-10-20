@@ -17,7 +17,7 @@ class UnienviosModel extends AbstractCarrier implements CarrierInterface
      * @var string
      */
     protected $_code = 'unienvios';
-
+	protected $_tokenCotacao;
     /**
      * @var bool
      */
@@ -68,7 +68,8 @@ $this->_checkoutSession = $checkoutSession;
 
         $this->rateResultFactory = $rateResultFactory;
         $this->rateMethodFactory = $rateMethodFactory;
-	
+	$quotations=$this->getQuotation();
+	$this->_tokenCotacao = $quotations->token;
     }
 
     /**
@@ -85,13 +86,14 @@ $this->_checkoutSession = $checkoutSession;
 
         /** @var \Magento\Shipping\Model\Rate\Result $result */
         $result = $this->rateResultFactory->create();
-
+ $quotations=$this->getQuotation();
+ $quotationsList = $quotations->quotations;
         /** @var \Magento\Quote\Model\Quote\Address\RateResult\Method $method */
         $method = $this->rateMethodFactory->create();
 
-        $method->setCarrier($this->_code);
+        $method->setCarrier("unienvios");
         $method->setCarrierTitle("Unienvios");
-
+	
       /**  $method->setMethod($this->_code);
         $method->setMethodTitle($this->getConfigData('name'));
 
@@ -102,9 +104,6 @@ $this->_checkoutSession = $checkoutSession;
 
         $result->append($method);
 	**/
- $quotations=$this->getQuotation();
- $quotationsList = $quotations->quotations;
-
 
 $method_select = $this->getCheckoutSession()->getQuote()->getShippingAddress()->getShippingMethod();
 
@@ -112,7 +111,6 @@ $method_select = $this->getCheckoutSession()->getQuote()->getShippingAddress()->
 		$dado = [
 		"code" => $quot->id,
 		"title" =>$quot->name,
-"description"=>"oioioi",
 		"price" => $quot->final_price,
 		"cost" => 0
 		];
@@ -132,12 +130,13 @@ $result->append($this->_getExpressShippingRate($dado2));
    
     /* @var $rate Mage_Shipping_Model_Rate_Result_Method */
 $method = $this->rateMethodFactory->create();
-    $method->setCarrier($this->_code);
-    $method->setCarrierTitle("Unienvios");
+    $method->setCarrier("unienvios");
+    $method->setCarrierTitle("Unienvios".$this->_tokenCotacao);
     $method->setMethod($dado["code"]);
     $method->setMethodTitle($dado["title"]);
     $method->setPrice($dado["price"]);
     $method->setCost($dado["cost"]);
+$method->setData('foo','customValue');
     return $method;
 }
 

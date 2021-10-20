@@ -50,6 +50,36 @@ class InstallSchema implements InstallSchemaInterface
             ]
         );
 
+ $installer->getConnection()->addColumn(
+            $installer->getTable('quote'),
+            'shipping_token_quotation_unienvios',
+            [
+                'type' => 'text',
+                'nullable' => false,
+                'comment' => 'shipping_token_quotation_unienvios',
+            ]
+        );
+
+        $installer->getConnection()->addColumn(
+            $installer->getTable('sales_order'),
+            'shipping_token_quotation_unienvios',
+            [
+                'type' => 'text',
+                'nullable' => false,
+                'comment' => 'shipping_token_quotation_unienvios',
+            ]
+        );
+
+        $installer->getConnection()->addColumn(
+            $installer->getTable('sales_order_grid'),
+            'shipping_token_quotation_unienvios',
+            [
+                'type' => 'text',
+                'nullable' => false,
+                'comment' => 'shipping_token_quotation_unienvios',
+            ]
+        );
+
         $setup->endSetup();
     }
 }

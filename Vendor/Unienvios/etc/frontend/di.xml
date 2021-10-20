@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
-        <plugin name="add-delivery-date-field"
-                type="Vendor\Unienvios\Model\Checkout\LayoutProcessorPlugin" sortOrder="10"/>
+    <type name="Magento\Checkout\Block\Onepage">
+        <arguments>
+            <argument name="layoutProcessors" xsi:type="array">
+                <item name="experius_extra_checkout_address_fields_layoutprocessor" xsi:type="object">Vendor\Unienvios\Block\Checkout\LayoutProcessor</item>
+            </argument>
+        </arguments>
     </type>
 </config>
